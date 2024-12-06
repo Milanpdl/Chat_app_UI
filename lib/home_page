@@ -1,0 +1,381 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final GlobalKey<ScaffoldState> _globalKey = GlobalKey();
+
+  List itemname = ["Message", "Online", "Group", "More"];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: _globalKey,
+      backgroundColor: Colors.black.withOpacity(0.8),
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 15, right: 20, top: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          _globalKey.currentState!.openDrawer();
+                        },
+                        icon: Icon(
+                          Icons.menu,
+                          color: Colors.white,
+                        )),
+                    IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        )),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 50,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: itemname.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: TextButton(
+                        onPressed: () {
+                          // Add your onPressed logic here
+                          print('${itemname[index]} pressed');
+                        },
+                        child: Text(
+                          itemname[index],
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 180,
+                child: Container(
+                  padding: EdgeInsets.only(left: 15, top: 15, right: 15),
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30))),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Favorite Contact",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                            ),
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.more_horiz,
+                                color: Colors.white,
+                              )),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 100,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            buildContactAvatar('Milan', 'photo1.jpg'),
+                            buildContactAvatar('joya', 'photo2.jpg'),
+                            buildContactAvatar('supru', 'photo3.jpg'),
+                            buildContactAvatar('Natuklal', 'photo4.jpg'),
+                            buildContactAvatar('Flutterdev', 'photo5.jpg'),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 327,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30))),
+                    child: Column(
+                      children: [
+                        buildConversationRow(
+                            "Milan", "How are you", "photo1.jpg", "8:12", 0),
+                        buildConversationRow(
+                            "supriya",
+                            "Something Wrong in your Mobile",
+                            "photo3.jpg",
+                            "8:15",
+                            0),
+                        buildConversationRow("joya", "Are You free For today",
+                            "photo2.jpg", "7:52", 0),
+                        buildConversationRow("FlutterDev",
+                            "I want my money back", "photo5.jpg", "6:12", 0),
+                        buildConversationRow("Natuklal",
+                            "lets go Outside today", "photo4.jpg", "3:11", 0),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: SizedBox(
+        height: 55,
+        width: 55,
+        child: FloatingActionButton(
+            backgroundColor: Colors.blue,
+            child: Icon(
+              Icons.edit_outlined,
+              size: 30,
+            ),
+            onPressed: () {}),
+      ),
+      drawer: Drawer(
+        width: 250,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.horizontal(right: Radius.circular(40))),
+        backgroundColor: Colors.black87,
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.black87,
+              borderRadius: BorderRadius.horizontal(right: Radius.circular(40)),
+              boxShadow: [
+                BoxShadow(
+                    color: Color(0x3D000000), spreadRadius: 30, blurRadius: 20)
+              ]),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 35, 20, 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.arrow_back_ios,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 50,
+                        ),
+                        Text(
+                          "Setting",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      children: [
+                        UserAvatar(filename: 'photo5.jpg'),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Text(
+                          "Debala",
+                          style: TextStyle(color: Colors.white),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    DrawerItem(
+                      title: "Account",
+                      icon: Icons.key,
+                    ),
+                    DrawerItem(
+                      title: "Chat",
+                      icon: Icons.chat_bubble,
+                    ),
+                    DrawerItem(
+                      title: "Notification",
+                      icon: Icons.notifications,
+                    ),
+                    DrawerItem(
+                      title: "Data and Storage",
+                      icon: Icons.storage,
+                    ),
+                    DrawerItem(
+                      title: "Help",
+                      icon: Icons.help,
+                    ),
+                    Divider(
+                      height: 25,
+                      color: Colors.blue,
+                    ),
+                    DrawerItem(
+                      title: "invite a friend",
+                      icon: Icons.people_outlined,
+                    ),
+                  ],
+                ),
+                DrawerItem(
+                  title: "Log out",
+                  icon: Icons.logout,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  ListTile buildConversationRow(
+      String name, String message, String filename, String time, int msgcount) {
+    return ListTile(
+        leading: UserAvatar(filename: filename),
+        title: Text(name),
+        subtitle: Text(
+          message,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        trailing: Column(
+          children: [
+            Text(
+              time,
+              style: TextStyle(fontSize: 12),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            if (msgcount > 0)
+              CircleAvatar(
+                radius: 7,
+                backgroundColor: Colors.blue,
+                child: Text(
+                  msgcount.toString(),
+                  style: TextStyle(color: Colors.white, fontSize: 10),
+                ),
+              ),
+          ],
+        ));
+  }
+
+  Column buildContactAvatar(String name, String filename) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 20),
+          child: UserAvatar(
+            filename: filename,
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          name,
+          style: TextStyle(color: Colors.white, fontSize: 12),
+        )
+      ],
+    );
+  }
+}
+
+class DrawerItem extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  const DrawerItem({
+    super.key,
+    required this.title,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 25),
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              color: Colors.white,
+            ),
+            SizedBox(
+              width: 30,
+            ),
+            Text(
+              title,
+              style: TextStyle(color: Colors.white),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class UserAvatar extends StatelessWidget {
+  final String filename;
+  const UserAvatar({
+    super.key,
+    required this.filename,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CircleAvatar(
+      radius: 32,
+      backgroundColor: Colors.white,
+      child: CircleAvatar(
+        radius: 29,
+        backgroundImage: Image.asset('assets/$filename').image,
+      ),
+    );
+  }
+}
+
+// child: ListView(
+//   scrollDirection: Axis.horizontal,
+//   children: [
+//     TextButton(
+//         onPressed: () {},
+//         child: Text(
+//           "Message",
+//           style: TextStyle(color: Colors.white),
+//         )),
+//     SizedBox(
+//       width: 35,
+//     ),
+//   ],
+// )
